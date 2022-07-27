@@ -2,30 +2,6 @@ init()
 global_hub()
 
 
-function playAudioDegatsFrappe(dgts) {
-
-    letters = ["A", "B", "C", "D"]
-
-    let letter = "A"
-    let palier = Math.min(Math.max(1, 1 + Math.floor(dgts/5)), 8)
-
-    if (palier <= 2 || palier == 4 || palier >= 7) {
-        letter = letters[Math.floor(Math.random()*4)]
-    } else {
-        letter = letters[Math.floor(Math.random()*3)]
-    }
-
-    playAudio(new Audio("audio/Frappe_palier_" + palier + "_" + letter + ".mp3"), 0.8)
-
-}
-
-
-function playAudio(audio, volume) {
-    audio.volume = volume
-    audio.play()
-}
-
-
 function new_image(src) {
     img = new Image()
     img.src = src
@@ -170,7 +146,6 @@ function init() {
     })
 
     imgs = {}
-    imgs["souris"] = new_image("https://keurstudio.github.io/DMKitsuo/Memoriz/graphics/souris.png")
     imgs["ecran_titre"] = new_image("https://keurstudio.github.io/DMKitsuo/Memoriz/graphics/ecran_titre.jpg")
     imgs["shop"] = new_image("https://keurstudio.github.io/DMKitsuo/Memoriz/graphics/icons/shop.png")
     imgs["monster"] = new_image("https://keurstudio.github.io/DMKitsuo/Memoriz/graphics/icons/monster.png")
@@ -241,8 +216,6 @@ function init() {
     tour_idx = 0
     dj_step = 0
 
-    ennemi_attack_steps = [15, 28, 39, 48, 55, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 0, 0, 0, 0]
-
     for (let i = 0; i < 20; i++) {
         deck.push(i)
     }
@@ -250,7 +223,7 @@ function init() {
     barre_temps = {"x1": 160, "y1": 80, "w": 1600, "h": 40}
     barre_vivacite = {"x1": 160, "y1": 130, "w": 1600, "h": 24}
     banc = {"x1": 210, "y1": 840, "w": 1500, "h": 240}
-    heros = {"x": 360, "y": 580, "y_carte": -1, "w": 192, "h": 192, "pvMax": 100, "pv": 100, "artefacts": [], "avancement_carte": 0, "num_etage": -1, "num_salle": -1, "temps_tour": 15, "temps_restant": 15, "debut_tour": new Date().getTime(), "mot_clicked" : -1, "vivacite": 0, "or": 0, "step_attack": -1, "debut_clignotement": -1, "decalage_x": 0}
+    heros = {"x": 360, "y": 580, "y_carte": -1, "w": 192, "h": 192, "pvMax": 100, "pv": 100, "artefacts": [], "avancement_carte": 0, "num_etage": -1, "num_salle": -1, "temps_tour": 15, "temps_restant": 15, "debut_tour": new Date().getTime(), "mot_clicked" : -1, "vivacite": 0, "or": 0}
     activations_artefacts = [0, 0, 0, 0, -1, -1, 0, 0, 0, 0, 0, -1, -1, -1, -1, -1, -1, -1, -1, -1]
 
     exemple_ennemi = {"x": 1260, "y": 540, "w": 128, "h": 128, "num": 12, "pvMax": 20, "pv": 20, "specifs": [], "demandes": [Math.floor(Math.random()*kanjis.length)], "nb_demandes": 2}
@@ -327,42 +300,42 @@ bestiaire = [
     // Spécif 4 : subit 100% de dégats en moins si plus de 50% du temps utilisé
     // Spécifs 8, 9, 10 : réduction de 10%, 20%, 30% du temps d'un tour
     // Spécif 11, 12 : 1, 2 mots proposés de plus
-    {"x": 1120, "y": 540, "w": 192, "h": 192, "num": 28, "pvMax": 120, "pv": 120, "specifs": [4,12,9], "attaque": 3, "defense": 1, "demandes": [], "nb_demandes": 2, "or": 5},
+    {"x": 1120, "y": 540, "w": 256, "h": 256, "num": 28, "pvMax": 120, "pv": 120, "specifs": [4,12,9], "attaque": 3, "defense": 1, "demandes": [], "nb_demandes": 2, "or": 5},
     // Spécif 5 : régénère 20% des pvMax à chaque début de tour
-    {"x": 1120, "y": 540, "w": 192, "h": 192, "num": 29, "pvMax": 50, "pv": 50, "specifs": [5,12,9], "attaque": 2, "defense": 0, "demandes": [], "nb_demandes": 3, "or": 5},
-    {"x": 1120, "y": 540, "w": 192, "h": 192, "num": 30, "pvMax": 150, "pv": 150, "specifs": [12,8], "attaque": 1, "defense": 1, "demandes": [], "nb_demandes": 5, "or": 5},
+    {"x": 1120, "y": 540, "w": 256, "h": 256, "num": 29, "pvMax": 50, "pv": 50, "specifs": [5,12,9], "attaque": 2, "defense": 0, "demandes": [], "nb_demandes": 3, "or": 5},
+    {"x": 1120, "y": 540, "w": 256, "h": 256, "num": 30, "pvMax": 150, "pv": 150, "specifs": [12,8], "attaque": 1, "defense": 1, "demandes": [], "nb_demandes": 5, "or": 5},
 
     // Elites étage 2 : 31, 32, 33
     // Spécif 4 : subit 100% de dégats en moins si plus de 50% du temps utilisé
     // Spécifs 8, 9, 10 : réduction de 10%, 20%, 30% du temps d'un tour
     // Spécif 11, 12 : 1, 2 mots proposés de plus
-    {"x": 1120, "y": 540, "w": 192, "h": 192, "num": 31, "pvMax": 250, "pv": 250, "specifs": [2,12,9], "attaque": 4, "defense": 1, "demandes": [], "nb_demandes": 3, "or": 10},
+    {"x": 1120, "y": 540, "w": 256, "h": 256, "num": 31, "pvMax": 250, "pv": 250, "specifs": [2,12,9], "attaque": 4, "defense": 1, "demandes": [], "nb_demandes": 3, "or": 10},
     // Spécif 5 : régénère 20% des pvMax à chaque début de tour
-    {"x": 1120, "y": 540, "w": 192, "h": 192, "num": 32, "pvMax": 150, "pv": 150, "specifs": [4,12,10,6], "attaque": 0, "defense": 0, "demandes": [], "nb_demandes": 2, "or": 10},
-    {"x": 1120, "y": 540, "w": 192, "h": 192, "num": 33, "pvMax": 350, "pv": 350, "specifs": [12,8], "attaque": 2, "defense": 0, "demandes": [], "nb_demandes": 6, "or": 10},
+    {"x": 1120, "y": 540, "w": 256, "h": 256, "num": 32, "pvMax": 150, "pv": 150, "specifs": [4,12,10,6], "attaque": 0, "defense": 0, "demandes": [], "nb_demandes": 2, "or": 10},
+    {"x": 1120, "y": 540, "w": 256, "h": 256, "num": 33, "pvMax": 350, "pv": 350, "specifs": [12,8], "attaque": 2, "defense": 0, "demandes": [], "nb_demandes": 6, "or": 10},
 
     // Elites étage 3 : 31, 32, 33
     // Spécif 4 : subit 100% de dégats en moins si plus de 50% du temps utilisé
     // Spécifs 8, 9, 10 : réduction de 10%, 20%, 30% du temps d'un tour
     // Spécif 11, 12 : 1, 2 mots proposés de plus
-    {"x": 1120, "y": 540, "w": 192, "h": 192, "num": 34, "pvMax": 350, "pv": 250, "specifs": [2,12,9], "attaque": 4, "defense": 1, "demandes": [], "nb_demandes": 3, "or": 15},
+    {"x": 1120, "y": 540, "w": 256, "h": 256, "num": 34, "pvMax": 350, "pv": 250, "specifs": [2,12,9], "attaque": 4, "defense": 1, "demandes": [], "nb_demandes": 3, "or": 15},
     // Spécif 5 : régénère 20% des pvMax à chaque début de tour
-    {"x": 1120, "y": 540, "w": 192, "h": 192, "num": 35, "pvMax": 250, "pv": 150, "specifs": [4,12,10,6], "attaque": 0, "defense": 0, "demandes": [], "nb_demandes": 2, "or": 15},
-    {"x": 1120, "y": 540, "w": 192, "h": 192, "num": 36, "pvMax": 450, "pv": 350, "specifs": [12,8], "attaque": 2, "defense": 0, "demandes": [], "nb_demandes": 6, "or": 15},
+    {"x": 1120, "y": 540, "w": 256, "h": 256, "num": 35, "pvMax": 250, "pv": 150, "specifs": [4,12,10,6], "attaque": 0, "defense": 0, "demandes": [], "nb_demandes": 2, "or": 15},
+    {"x": 1120, "y": 540, "w": 256, "h": 256, "num": 36, "pvMax": 450, "pv": 350, "specifs": [12,8], "attaque": 2, "defense": 0, "demandes": [], "nb_demandes": 6, "or": 15},
 
 
     // Boss étage 1 : 37, 38
     // Spécif 13 : invoque un monstre à la fin de chaque tour
-    {"x": 1120, "y": 540, "w": 256, "h": 256, "num": 37, "pvMax": 270, "pv": 270, "specifs": [9,11,13], "attaque": 3, "defense": 1, "demandes": [], "nb_demandes": 2, "or": 15},
-    {"x": 1120, "y": 540, "w": 256, "h": 256, "num": 38, "pvMax": 230, "pv": 230, "specifs": [7,9,11,12], "attaque": 3, "defense": 5, "demandes": [], "nb_demandes": 4, "or": 15},
+    {"x": 1120, "y": 540, "w": 384, "h": 384, "num": 37, "pvMax": 270, "pv": 270, "specifs": [9,11,13], "attaque": 3, "defense": 1, "demandes": [], "nb_demandes": 2, "or": 15},
+    {"x": 1120, "y": 540, "w": 384, "h": 384, "num": 38, "pvMax": 230, "pv": 230, "specifs": [7,9,11,12], "attaque": 3, "defense": 5, "demandes": [], "nb_demandes": 4, "or": 15},
 
     // Boss étage 2 : 39, 40
-    {"x": 1120, "y": 540, "w": 256, "h": 256, "num": 39, "pvMax": 440, "pv": 440, "specifs": [9,11,13], "attaque": 3, "defense": 0, "demandes": [], "nb_demandes": 2, "or": 30},
-    {"x": 1120, "y": 540, "w": 256, "h": 256, "num": 40, "pvMax": 480, "pv": 480, "specifs": [6,7,9,11,12], "attaque": 0, "defense": 0, "demandes": [], "nb_demandes": 5, "or": 30},
+    {"x": 1120, "y": 540, "w": 384, "h": 384, "num": 39, "pvMax": 440, "pv": 440, "specifs": [9,11,13], "attaque": 3, "defense": 0, "demandes": [], "nb_demandes": 2, "or": 30},
+    {"x": 1120, "y": 540, "w": 384, "h": 384, "num": 40, "pvMax": 480, "pv": 480, "specifs": [6,7,9,11,12], "attaque": 0, "defense": 0, "demandes": [], "nb_demandes": 5, "or": 30},
 
     // Boss étage 3 : 39, 40
-    {"x": 1120, "y": 540, "w": 256, "h": 256, "num": 41, "pvMax": 640, "pv": 640, "specifs": [9,11,13], "attaque": 3, "defense": 0, "demandes": [], "nb_demandes": 2, "or": 30},
-    {"x": 1120, "y": 540, "w": 256, "h": 256, "num": 42, "pvMax": 680, "pv": 680, "specifs": [6,7,9,11,12], "attaque": 0, "defense": 0, "demandes": [], "nb_demandes": 5, "or": 45},
+    {"x": 1120, "y": 540, "w": 384, "h": 384, "num": 41, "pvMax": 640, "pv": 440, "specifs": [9,11,13], "attaque": 3, "defense": 0, "demandes": [], "nb_demandes": 2, "or": 30},
+    {"x": 1120, "y": 540, "w": 384, "h": 384, "num": 42, "pvMax": 680, "pv": 480, "specifs": [6,7,9,11,12], "attaque": 0, "defense": 0, "demandes": [], "nb_demandes": 5, "or": 45},
 
 ]
 
@@ -394,7 +367,7 @@ function generer_boutique() {
 
         let n = Math.floor(16*Math.random())
 
-        while ((boutique.artefacts.indexOf(n) > -1 || heros.artefacts.indexOf(n) > -1) && tries < 60) {
+        while (boutique.artefacts.indexOf(n) > -1 || heros.artefacts.indexOf(n) > -1 && tries < 60) {
             tries += 1
             n = Math.floor(16*Math.random())
         }
@@ -416,10 +389,6 @@ function invoquer_monster(liste_monstres) {
 
     for (let i = 0; i < liste_monstres.length; i++) {
         let ennemi_genere = clone(bestiaire.filter(x=>x.num == liste_monstres[i])[0])
-        ennemi_genere.time_attack = -1
-        ennemi_genere.step_attack = -1
-        ennemi_genere.debut_clignotement = -1
-        ennemi_genere.decalage_x = 0
         let x = -1
         let y = -1
         let trop_proche = true
@@ -456,10 +425,6 @@ function generer_salle_monstres(salles_potentielles, profondeur) {
 
     for (let i = 0; i < liste_monstres.length; i++) {
         let ennemi_genere = clone(bestiaire.filter(x=>x.num == liste_monstres[i])[0])
-        ennemi_genere.time_attack = -1
-        ennemi_genere.step_attack = -1
-        ennemi_genere.debut_clignotement = -1
-        ennemi_genere.decalage_x = 0
         let x = -1
         let y = -1
         let trop_proche = true
@@ -490,15 +455,11 @@ function generer_salle_elite(salles_potentielles) {
 
     let salle_idx = Math.floor(Math.random()*salles_potentielles.length)
     let liste_monstres = salles_potentielles[salle_idx]
+
     ennemis = []
 
     for (let i = 0; i < liste_monstres.length; i++) {
         let ennemi_genere = clone(bestiaire.filter(x=>x.num == liste_monstres[i])[0])
-        ennemi_genere.time_attack = -1
-        ennemi_genere.step_attack = -1
-        ennemi_genere.debut_clignotement = -1
-        ennemi_genere.decalage_x = 0
-
         let x = -1
         let y = -1
         let trop_proche = true
@@ -849,7 +810,7 @@ function animate_carte() {
         ctx.drawImage(imgs["art-heros-esprit"], x - 0.5*w, y - 0.5*h*respi, w, h)
         ctx.drawImage(imgs["face_neutral"], x - 0.5*w, y - 0.5*h*respi, w, h)
         if (x > 960) {
-            heros.avancement_carte += 0.0125
+            heros.avancement_carte += 0.005
         }
     }
 
@@ -1350,39 +1311,19 @@ function animate_jeu() {
                     frappes.push({"x": x, "y": y, "w": mot.enemy.w*1.75, "h": mot.enemy.h*1.75, "debut": new Date().getTime()})
                     if (heros.temps_restant >= 0.5*heros.temps_tour) {
                         heros.vivacite = Math.min(heros.vivacite + 1, 100)
-                        let dgts = Math.max(0, Math.floor((4 + Math.floor(heros.vivacite*(1+0.1*(heros.artefacts.indexOf(12)>-1))/8) - mot.enemy.defense) * (1 - 0.5*(mot.enemy.specifs.indexOf(2) > -1 && heros.temps_restant < 0.5*heros.temps_tour) ) * (1 - 1*(mot.enemy.specifs.indexOf(4) > -1 && heros.temps_restant < 0.5*heros.temps_tour) ) *(1+Math.min(combos.nb/20, 4)))*(1 + 1*(activations_artefacts[6] == 9)))
+                        let dgts = Math.max(0, Math.floor((4 + Math.floor(heros.vivacite*(1+0.1*(heros.artefacts.indexOf(12)>-1))/8) - mot.enemy.defense) * (1 - 0.5*(mot.enemy.specifs.indexOf(2) > -1 && heros.temps_restant < 0.5*heros.temps_tour) ) * (1 - 1*(mot.enemy.specifs.indexOf(4) > -1 && heros.temps_restant < 0.5*heros.temps_tour) ) *(1+Math.min(combos.nb/10, 4)))*(1 + 1*(activations_artefacts[6] == 9)))
                         affichage_degats.push({"x": x, "y": y, "dgts": dgts, "debut": new Date().getTime()})
                         mot.enemy.pv = Math.min(mot.enemy.pv, mot.enemy.pv - dgts)
-                        mot.enemy.decalage_x += dgts
-                        if (mot.enemy.debut_clignotement == -1) {
-                            mot.enemy.debut_clignotement = time
-                        }
-                        heros.step_attack = 0
-                        heros.audio_dgts = dgts
                     } else if (heros.temps_restant >= heros.temps_tour/6) {
                         heros.vivacite = Math.min(heros.vivacite + 0.5, 100)
-                        let dgts = Math.max(0, Math.floor((3 + Math.floor(heros.vivacite*(1+0.1*(heros.artefacts.indexOf(12)>-1))/15) - mot.enemy.defense) * (1 - 0.5*(mot.enemy.specifs.indexOf(2) > -1 && heros.temps_restant < 0.5*heros.temps_tour) ) * (1 - 1*(mot.enemy.specifs.indexOf(4) > -1 && heros.temps_restant < 0.5*heros.temps_tour) ) *(1+Math.min(combos.nb/20, 4)))*(1 + 1*(activations_artefacts[6] == 9)))
+                        let dgts = Math.max(0, Math.floor((3 + Math.floor(heros.vivacite*(1+0.1*(heros.artefacts.indexOf(12)>-1))/15) - mot.enemy.defense) * (1 - 0.5*(mot.enemy.specifs.indexOf(2) > -1 && heros.temps_restant < 0.5*heros.temps_tour) ) * (1 - 1*(mot.enemy.specifs.indexOf(4) > -1 && heros.temps_restant < 0.5*heros.temps_tour) ) *(1+Math.min(combos.nb/10, 4)))*(1 + 1*(activations_artefacts[6] == 9)))
                         affichage_degats.push({"x": x, "y": y, "dgts": dgts, "debut": new Date().getTime()})
                         mot.enemy.pv = Math.min(mot.enemy.pv, mot.enemy.pv - dgts)
-                        mot.enemy.decalage_x += dgts
-                        if (mot.enemy.debut_clignotement == -1) {
-                            mot.enemy.debut_clignotement = time
-                        }
-
-                        heros.step_attack = 0
-                        heros.audio_dgts = dgts
                     } else {
                         heros.vivacite = Math.min(heros.vivacite + 0.25, 100)
-                        let dgts = Math.max(0, Math.floor((2 + Math.floor(heros.vivacite*(1+0.1*(heros.artefacts.indexOf(12)>-1))/20) - mot.enemy.defense) * (1 - 0.5*(mot.enemy.specifs.indexOf(2) > -1 && heros.temps_restant < 0.5*heros.temps_tour) ) * (1 - 1*(mot.enemy.specifs.indexOf(4) > -1 && heros.temps_restant < 0.5*heros.temps_tour) ) *(1+Math.min(combos.nb/20, 4)))*(1 + 1*(activations_artefacts[6] == 9)))
+                        let dgts = Math.max(0, Math.floor((2 + Math.floor(heros.vivacite*(1+0.1*(heros.artefacts.indexOf(12)>-1))/20) - mot.enemy.defense) * (1 - 0.5*(mot.enemy.specifs.indexOf(2) > -1 && heros.temps_restant < 0.5*heros.temps_tour) ) * (1 - 1*(mot.enemy.specifs.indexOf(4) > -1 && heros.temps_restant < 0.5*heros.temps_tour) ) *(1+Math.min(combos.nb/10, 4)))*(1 + 1*(activations_artefacts[6] == 9)))
                         affichage_degats.push({"x": x, "y": y, "dgts": dgts, "debut": new Date().getTime()})
                         mot.enemy.pv = Math.min(mot.enemy.pv, mot.enemy.pv - dgts)
-                        mot.enemy.decalage_x += dgts
-                        if (mot.enemy.debut_clignotement == -1) {
-                            mot.enemy.debut_clignotement = time
-                        }
-
-                        heros.step_attack = 0
-                        heros.audio_dgts = dgts
                     }
 
                     // Activation des artefacts en cas de kanji trouvé
@@ -1435,7 +1376,6 @@ function animate_jeu() {
                                 frappes.push({"x": x, "y": y, "w": ennemis[i].w*1.75, "h": ennemis[i].h*1.75, "debut": new Date().getTime()})
                                 ennemis[i].pv -= 2
                                 affichage_degats.push({"x": ennemis[i].x, "y": ennemis[i].y, "dgts": 2, "debut": new Date().getTime()})
-                                playAudioDegatsFrappe(2)
                             }
                         }
                     }
@@ -1474,20 +1414,17 @@ function animate_jeu() {
                     frappes.push({"x": x, "y": y, "w": heros.w*1.75, "h": heros.h*1.75, "debut": new Date().getTime()})
                     affichage_erreurs.push({"x": mots_demandes[i].x, "y": mots_demandes[i].y - 66, "idx": mots_demandes[i].idx, "debut": new Date().getTime()})
                     heros.vivacite = Math.max(0, heros.vivacite - 8*(1-0.1*(heros.artefacts.indexOf(11)>-1)+0.1*(heros.artefacts.indexOf(19)>-1)))
-                    mots_demandes[i].enemy.time_attack = new Date().getTime()
-                    mots_demandes[i].enemy.step_attack = -1
-
                     if (heros.temps_restant >= 0.5*heros.temps_tour) {
                         let dgts = 5 + mot.enemy.attaque
-                        mots_demandes[i].enemy.audio_dgts = dgts
+                        heros.pv -= dgts
                         affichage_degats.push({"x": x, "y": y, "dgts": dgts, "debut": new Date().getTime()})
                     } else if (heros.temps_restant >= heros.temps_tour/6) {
                         let dgts = 4 + mot.enemy.attaque
-                        mots_demandes[i].enemy.audio_dgts = dgts
+                        heros.pv -= dgts
                         affichage_degats.push({"x": x, "y": y, "dgts": dgts, "debut": new Date().getTime()})
                     } else {
                         let dgts = 3 + mot.enemy.attaque
-                        mots_demandes[i].enemy.audio_dgts = dgts
+                        heros.pv -= dgts
                         affichage_degats.push({"x": x, "y": y, "dgts": dgts, "debut": new Date().getTime()})
                     }
 
@@ -1501,7 +1438,6 @@ function animate_jeu() {
                                 frappes.push({"x": x, "y": y, "w": ennemis[i].w*1.75, "h": ennemis[i].h*1.75, "debut": new Date().getTime()})
                                 ennemis[i].pv -= 2
                                 affichage_degats.push({"x": ennemis[i].x, "y": ennemis[i].y, "dgts": 4, "debut": new Date().getTime()})
-                                playAudioDegatsFrappe(4)
                             }
                         }
                     }
@@ -1525,16 +1461,13 @@ function animate_jeu() {
             // Kanji pas trouvé dans le temps imparti
             let nb = 0
             for (let i = 0; i < mots_demandes.length; i++) {
-                combos.nb = 0
                 let x = heros.x - 10 + 20*Math.random()
                 let y = heros.y - 10 + 20*Math.random()
                 frappes.push({"x": x, "y": y, "w": heros.w*1.75, "h": heros.h*1.75, "debut": new Date().getTime() + 250*nb})
-                affichage_erreurs.push({"x": mots_demandes[i].x, "y": mots_demandes[i].y - 66, "idx": mots_demandes[i].idx, "debut": new Date().getTime()+250*nb})
+                affichage_erreurs.push({"x": mots_demandes[i].x, "y": mots_demandes[i].y - 66, "idx": mots_demandes[i].idx, "debut": new Date().getTime()})
                 heros.vivacite = Math.max(0, heros.vivacite - 3*(1-0.1*(heros.artefacts.indexOf(11)>-1)+0.1*(heros.artefacts.indexOf(19)>-1)))
                 let dgts = (2+mots_demandes[i].enemy.attaque) + 1*(mots_demandes[i].enemy.specifs.indexOf(1) > -1)
-                mots_demandes[i].enemy.time_attack = new Date().getTime()+250*nb
-                mots_demandes[i].enemy.step_attack = -1
-                mots_demandes[i].enemy.audio_dgts = dgts
+                heros.pv -= dgts
 
                 if (heros.artefacts.indexOf(9) > -1) {
                     activations_artefacts[9] += 1
@@ -1560,7 +1493,6 @@ function animate_jeu() {
                             frappes.push({"x": x, "y": y, "w": ennemis[i].w*1.75, "h": ennemis[i].h*1.75, "debut": new Date().getTime()})
                             ennemis[i].pv -= 2
                             affichage_degats.push({"x": ennemis[i].x, "y": ennemis[i].y, "dgts": 4, "debut": new Date().getTime()})
-                            playAudioDegatsFrappe(2)
                         }
                     }
                 }
@@ -1604,7 +1536,7 @@ function animate_jeu() {
     }
 
     if (combos.ordre.length > 0 && combos.ordre[0] >= mots_demandes.length) {
-        combos.ordre = [Math.floor(Math.random()*mots_demandes.length)]
+	combos.ordre = [Math.floor(Math.random()*mots_demandes.length)]
     }
 
     // Suppression des ennemis dont les pv sont égaux à 0
@@ -1674,51 +1606,9 @@ function animate_jeu() {
     {
         let w = heros.w * respi
         let h = heros.h * respi
-
-        if (heros.step_attack > -1) {
-            heros.step_attack += 1
-            if (heros.step_attack == 5) {
-                playAudioDegatsFrappe(heros.audio_dgts)
-            }
-            if (heros.step_attack >= ennemi_attack_steps.length) {
-                heros.step_attack = -1
-            }
-        }
-
-        let offset_charge = 0
-
-        if (heros.step_attack < 10 || heros.step_attack >= ennemi_attack_steps.length-3) {
-            if (heros.step_attack == 7 || heros.step_attack == ennemi_attack_steps.length-3) {
-                ctx.globalAlpha = 0.75
-            } else if (heros.step_attack == 8 || heros.step_attack == ennemi_attack_steps.length-2) {
-                ctx.globalAlpha = 0.50
-            } else if (heros.step_attack == 9 || heros.step_attack == ennemi_attack_steps.length-1) {
-                ctx.globalAlpha = 0.25
-            }
-
-            if (heros.step_attack >= 0) {
-                offset_charge = 1.5*ennemi_attack_steps[heros.step_attack]
-            }
-        }
-
-        if (time > heros.debut_clignotement + 2000) {
-            heros.debut_clignotement = -1
-        } else {
-            ctx.globalAlpha *= Math.abs(1-2*((time-heros.debut_clignotement)%250)/250)
-        }
-
-        if (heros.step_attack < 10 || heros.step_attack >= ennemi_attack_steps.length-3) {
-            ctx.drawImage(imgs["art-heros-esprit"], heros.x - 0.5*w + offset_charge - heros.decalage_x*4, heros.y - 0.5*h*respi, w, h)
-            ctx.drawImage(imgs["face_neutral"], heros.x - 0.5*w + offset_charge - heros.decalage_x*4, heros.y - 0.5*h*respi, w, h)
-        }
-
-        if (heros.decalage_x > 0.2 && heros.debut_clignotement == -1) {
-            heros.decalage_x *= 0.95
-        }
-
-        ctx.globalAlpha = 1
+        ctx.drawImage(imgs["art-heros-esprit"], heros.x - 0.5*w, heros.y - 0.5*h*respi, w, h)
+        ctx.drawImage(imgs["face_neutral"], heros.x - 0.5*w, heros.y - 0.5*h*respi, w, h)
     }
-
 
     if (combos.nb > 0) {
         ctx.font = 48 + "px Romelio"
@@ -1729,7 +1619,7 @@ function animate_jeu() {
         ctx.strokeText("COMBO : ", heros.x, heros.y-heros.h*1.5)
         ctx.fillText("COMBO : ", heros.x, heros.y-heros.h*1.5)
 
-        ctx.font = ((combos.font_time+72)*(1+Math.min(2, 0.02*Math.min(60,combos.nb)))) + "px Romelio"
+        ctx.font = ((combos.font_time+72)*(1+Math.min(2, 0.02*combos.nb))) + "px Romelio"
 
         if (combos.font_time > 0) {
             combos.font_time -= 15
@@ -1744,57 +1634,7 @@ function animate_jeu() {
         let enemy = ennemis[i]
         let w = enemy.w * respi
         let h = enemy.h * respi
-        let attacking = 0
-
-        if (enemy.time_attack > -1) {
-            if (time >= enemy.time_attack) {
-                enemy.step_attack = 0
-                enemy.time_attack = -1
-            }
-        }
-
-        if (enemy.step_attack > -1) {
-            enemy.step_attack += 1
-            if (enemy.step_attack == 5) {
-                console.log(i, enemy.audio_dgts)
-                playAudioDegatsFrappe(enemy.audio_dgts)
-                heros.pv -= enemy.audio_dgts
-                heros.decalage_x += enemy.audio_dgts
-                if (heros.debut_clignotement == -1) {
-                    heros.debut_clignotement = time
-                }
-            }
-            if (enemy.step_attack >= ennemi_attack_steps.length) {
-                enemy.step_attack = -1
-            }
-        }
-
-        if (time > enemy.debut_clignotement + 2000) {
-            enemy.debut_clignotement = -1
-        } else {
-            ctx.globalAlpha *= Math.abs(1-2*((time-heros.debut_clignotement)%250)/250)
-        }
-
-        if (enemy.step_attack < 10 || enemy.step_attack >= ennemi_attack_steps.length-3) {
-            if (enemy.step_attack == 7 || enemy.step_attack == ennemi_attack_steps.length-3) {
-                ctx.globalAlpha = 0.75
-            } else if (enemy.step_attack == 8 || enemy.step_attack == ennemi_attack_steps.length-2) {
-                ctx.globalAlpha = 0.50
-            } else if (enemy.step_attack == 9 || enemy.step_attack == ennemi_attack_steps.length-1) {
-                ctx.globalAlpha = 0.25
-            }
-
-            let offset_charge = 0
-            if (enemy.step_attack >= 0) {
-                offset_charge = 1.5*ennemi_attack_steps[enemy.step_attack]
-            }
-            ctx.drawImage(imgs["monster" + enemy.num], enemy.x - 0.5*w - offset_charge + enemy.decalage_x, enemy.y - 0.5*h*respi, w, h)
-            ctx.globalAlpha = 1
-        }
-
-        if (enemy.decalage_x > 0.2 && enemy.debut_clignotement == -1) {
-            enemy.decalage_x *= 0.95
-        }
+        ctx.drawImage(imgs["monster" + enemy.num], enemy.x - 0.5*w, enemy.y - 0.5*h*respi, w, h)
 
         ctx.font = 24 + "px Romelio"
         ctx.textAlign = "center"
@@ -1848,21 +1688,18 @@ function animate_jeu() {
     }
 
     // Affichage des kanjis demandés
-    ctx.font = (100+(10*(heros.mot_clicked > -1)*Math.sin(time/200))) + "px Romelio"
+    ctx.font = 100 + "px Romelio"
     ctx.textAlign = "center"
     ctx.textBaseline = "middle"
 
     for (let j = 0; j < mots_demandes.length; j++) {
         if (serie >= 2 && heros.artefacts.indexOf(13) > -1 && mots_demandes[j].idx < 10*(serie-1)) {
             ctx.fillStyle = "#0000ff"
+        } else if (combos.ordre.length > 0 && combos.ordre[0] == j) {
+            ctx.fillStyle = "#ff0000"
         } else {
             ctx.fillStyle = "#ffffff"
         }
-
-        if (combos.ordre.length > 0 && combos.ordre[0] == j) {
-            ctx.fillStyle = "#ff0000"
-        }
-
         ctx.strokeText(kanjis[mots_demandes[j].idx], mots_demandes[j].x, mots_demandes[j].y)
         ctx.fillText(kanjis[mots_demandes[j].idx], mots_demandes[j].x, mots_demandes[j].y)
     }
@@ -1930,15 +1767,15 @@ function animate_jeu() {
     ctx.textBaseline = "middle"
     ctx.fillStyle = "#000000"
 
-    let dgts = Math.max(0, Math.floor((4 + Math.floor(heros.vivacite*(1+0.1*(heros.artefacts.indexOf(12)>-1))/8))*(1+Math.min(combos.nb/20, 4)))*(1 + 1*(activations_artefacts[6] == 9)))
+    let dgts = Math.max(0, Math.floor((4 + Math.floor(heros.vivacite*(1+0.1*(heros.artefacts.indexOf(12)>-1))/8))*(1+Math.min(combos.nb/10, 4)))*(1 + 1*(activations_artefacts[6] == 9)))
     ctx.strokeText(dgts, 1360, barre_temps.y1 + 0.5*barre_temps.h)
     ctx.fillText(dgts, 1360, barre_temps.y1 + 0.5*barre_temps.h)
 
-    dgts = Math.max(0, Math.floor((3 + Math.floor(heros.vivacite*(1+0.1*(heros.artefacts.indexOf(12)>-1))/15) )*(1+Math.min(combos.nb/20, 4)))*(1 + 1*(activations_artefacts[6] == 9)))
+    dgts = Math.max(0, Math.floor((3 + Math.floor(heros.vivacite*(1+0.1*(heros.artefacts.indexOf(12)>-1))/15) )*(1+Math.min(combos.nb/10, 4)))*(1 + 1*(activations_artefacts[6] == 9)))
     ctx.strokeText(dgts, 160 + (1/3)*1600, barre_temps.y1 + 0.5*barre_temps.h)
     ctx.fillText(dgts, 160 + (1/3)*1600, barre_temps.y1 + 0.5*barre_temps.h)
 
-    dgts = Math.max(0, Math.floor((2 + Math.floor(heros.vivacite*(1+0.1*(heros.artefacts.indexOf(12)>-1))/20))*(1+Math.min(combos.nb/20, 4)))*(1 + 1*(activations_artefacts[6] == 9)))
+    dgts = Math.max(0, Math.floor((2 + Math.floor(heros.vivacite*(1+0.1*(heros.artefacts.indexOf(12)>-1))/20))*(1+Math.min(combos.nb/10, 4)))*(1 + 1*(activations_artefacts[6] == 9)))
     ctx.strokeText(dgts, 160 + (1/12)*1600, barre_temps.y1 + 0.5*barre_temps.h)
     ctx.fillText(dgts, 160 + (1/12)*1600, barre_temps.y1 + 0.5*barre_temps.h)
 
@@ -2378,26 +2215,19 @@ function print_text(dialogue) {
 }
 
 
-function animate_fin() {
+function animate_perdu() {
 
     ctx.drawImage(imgs["background3"], 0, 0, 1920, 1080)
 
     ctx.font = "120px Arial"
-
-    if (dj_step >= 3) {
-        ctx.strokeText("Victoire", 960, 540)
-        ctx.fillStyle = "#ffffff"
-        ctx.fillText("Victoire", 960, 540)
-    } else {
-        ctx.strokeText("Échec", 960, 540)
-        ctx.fillStyle = "#ffffff"
-        ctx.fillText("Échec", 960, 540)
-    }
+    ctx.strokeText("Échec", 960, 540)
+    ctx.fillStyle = "#ffffff"
+    ctx.fillText("Échec", 960, 540)
 
     ctx.font = "72px Arial"
-    ctx.strokeText("Étage atteint : " + heros.num_etage, 960, 840)
+    ctx.strokeText("Étage atteint :" + heros.num_etage, 960, 840)
     ctx.fillStyle = "#ffffff"
-    ctx.fillText("Étage atteint : " + heros.num_etage, 960, 840)
+    ctx.fillText("Étage atteint :" + heros.num_etage, 960, 840)
 
     if (clicked.down) {
         clicked.down = false
@@ -2573,7 +2403,7 @@ function global_hub() {
     } else if (mode == 6) {
         animate_revision()
     } else if (mode == 7) {
-        animate_fin()
+        animate_perdu()
     }
 
 //    ctx.font = "40px Arial"
@@ -2614,8 +2444,6 @@ function global_hub() {
     } else {
         transition.step = Math.max(0, transition.step-1)
     }
-
-    ctx.drawImage(imgs["souris"], xyMouseMove.x, xyMouseMove.y, 64, 64)
 
     requestAnimationFrame(global_hub)
 }
