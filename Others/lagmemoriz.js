@@ -2,30 +2,6 @@ init()
 global_hub()
 
 
-function playAudioDegatsFrappe(dgts) {
-
-    letters = ["A", "B", "C", "D"]
-
-    let letter = "A"
-    let palier = Math.min(Math.max(1, 1 + Math.floor(dgts/5)), 8)
-
-    if (palier <= 2 || palier == 4 || palier >= 7) {
-        letter = letters[Math.floor(Math.random()*4)]
-    } else {
-        letter = letters[Math.floor(Math.random()*3)]
-    }
-
-    playAudio(new Audio("audio/Frappe_palier_" + palier + "_" + letter + ".mp3"), 0.8)
-
-}
-
-
-function playAudio(audio, volume) {
-    audio.volume = volume
-    audio.play()
-}
-
-
 function new_image(src) {
     img = new Image()
     img.src = src
@@ -353,16 +329,16 @@ bestiaire = [
 
     // Boss étage 1 : 37, 38
     // Spécif 13 : invoque un monstre à la fin de chaque tour
-    {"x": 1120, "y": 540, "w": 256, "h": 256, "num": 37, "pvMax": 270, "pv": 270, "specifs": [9,11,13], "attaque": 3, "defense": 1, "demandes": [], "nb_demandes": 2, "or": 15},
-    {"x": 1120, "y": 540, "w": 256, "h": 256, "num": 38, "pvMax": 230, "pv": 230, "specifs": [7,9,11,12], "attaque": 3, "defense": 5, "demandes": [], "nb_demandes": 4, "or": 15},
+    {"x": 1120, "y": 540, "w": 256, "h": 384, "num": 37, "pvMax": 270, "pv": 270, "specifs": [9,11,13], "attaque": 3, "defense": 1, "demandes": [], "nb_demandes": 2, "or": 15},
+    {"x": 1120, "y": 540, "w": 256, "h": 384, "num": 38, "pvMax": 230, "pv": 230, "specifs": [7,9,11,12], "attaque": 3, "defense": 5, "demandes": [], "nb_demandes": 4, "or": 15},
 
     // Boss étage 2 : 39, 40
-    {"x": 1120, "y": 540, "w": 256, "h": 256, "num": 39, "pvMax": 440, "pv": 440, "specifs": [9,11,13], "attaque": 3, "defense": 0, "demandes": [], "nb_demandes": 2, "or": 30},
-    {"x": 1120, "y": 540, "w": 256, "h": 256, "num": 40, "pvMax": 480, "pv": 480, "specifs": [6,7,9,11,12], "attaque": 0, "defense": 0, "demandes": [], "nb_demandes": 5, "or": 30},
+    {"x": 1120, "y": 540, "w": 256, "h": 384, "num": 39, "pvMax": 440, "pv": 440, "specifs": [9,11,13], "attaque": 3, "defense": 0, "demandes": [], "nb_demandes": 2, "or": 30},
+    {"x": 1120, "y": 540, "w": 256, "h": 384, "num": 40, "pvMax": 480, "pv": 480, "specifs": [6,7,9,11,12], "attaque": 0, "defense": 0, "demandes": [], "nb_demandes": 5, "or": 30},
 
     // Boss étage 3 : 39, 40
-    {"x": 1120, "y": 540, "w": 256, "h": 256, "num": 41, "pvMax": 640, "pv": 640, "specifs": [9,11,13], "attaque": 3, "defense": 0, "demandes": [], "nb_demandes": 2, "or": 30},
-    {"x": 1120, "y": 540, "w": 256, "h": 256, "num": 42, "pvMax": 680, "pv": 680, "specifs": [6,7,9,11,12], "attaque": 0, "defense": 0, "demandes": [], "nb_demandes": 5, "or": 45},
+    {"x": 1120, "y": 540, "w": 256, "h": 384, "num": 41, "pvMax": 640, "pv": 440, "specifs": [9,11,13], "attaque": 3, "defense": 0, "demandes": [], "nb_demandes": 2, "or": 30},
+    {"x": 1120, "y": 540, "w": 256, "h": 384, "num": 42, "pvMax": 680, "pv": 480, "specifs": [6,7,9,11,12], "attaque": 0, "defense": 0, "demandes": [], "nb_demandes": 5, "or": 45},
 
 ]
 
@@ -490,6 +466,7 @@ function generer_salle_elite(salles_potentielles) {
 
     let salle_idx = Math.floor(Math.random()*salles_potentielles.length)
     let liste_monstres = salles_potentielles[salle_idx]
+
     ennemis = []
 
     for (let i = 0; i < liste_monstres.length; i++) {
@@ -1368,7 +1345,6 @@ function animate_jeu() {
                         if (mot.enemy.debut_clignotement == -1) {
                             mot.enemy.debut_clignotement = time
                         }
-
                         heros.step_attack = 0
                         heros.audio_dgts = dgts
                     } else {
@@ -1380,7 +1356,6 @@ function animate_jeu() {
                         if (mot.enemy.debut_clignotement == -1) {
                             mot.enemy.debut_clignotement = time
                         }
-
                         heros.step_attack = 0
                         heros.audio_dgts = dgts
                     }
@@ -1435,7 +1410,6 @@ function animate_jeu() {
                                 frappes.push({"x": x, "y": y, "w": ennemis[i].w*1.75, "h": ennemis[i].h*1.75, "debut": new Date().getTime()})
                                 ennemis[i].pv -= 2
                                 affichage_degats.push({"x": ennemis[i].x, "y": ennemis[i].y, "dgts": 2, "debut": new Date().getTime()})
-                                playAudioDegatsFrappe(2)
                             }
                         }
                     }
@@ -1501,7 +1475,6 @@ function animate_jeu() {
                                 frappes.push({"x": x, "y": y, "w": ennemis[i].w*1.75, "h": ennemis[i].h*1.75, "debut": new Date().getTime()})
                                 ennemis[i].pv -= 2
                                 affichage_degats.push({"x": ennemis[i].x, "y": ennemis[i].y, "dgts": 4, "debut": new Date().getTime()})
-                                playAudioDegatsFrappe(4)
                             }
                         }
                     }
@@ -1560,7 +1533,6 @@ function animate_jeu() {
                             frappes.push({"x": x, "y": y, "w": ennemis[i].w*1.75, "h": ennemis[i].h*1.75, "debut": new Date().getTime()})
                             ennemis[i].pv -= 2
                             affichage_degats.push({"x": ennemis[i].x, "y": ennemis[i].y, "dgts": 4, "debut": new Date().getTime()})
-                            playAudioDegatsFrappe(2)
                         }
                     }
                 }
@@ -1604,7 +1576,7 @@ function animate_jeu() {
     }
 
     if (combos.ordre.length > 0 && combos.ordre[0] >= mots_demandes.length) {
-        combos.ordre = [Math.floor(Math.random()*mots_demandes.length)]
+	combos.ordre = [Math.floor(Math.random()*mots_demandes.length)]
     }
 
     // Suppression des ennemis dont les pv sont égaux à 0
@@ -1674,51 +1646,9 @@ function animate_jeu() {
     {
         let w = heros.w * respi
         let h = heros.h * respi
-
-        if (heros.step_attack > -1) {
-            heros.step_attack += 1
-            if (heros.step_attack == 5) {
-                playAudioDegatsFrappe(heros.audio_dgts)
-            }
-            if (heros.step_attack >= ennemi_attack_steps.length) {
-                heros.step_attack = -1
-            }
-        }
-
-        let offset_charge = 0
-
-        if (heros.step_attack < 10 || heros.step_attack >= ennemi_attack_steps.length-3) {
-            if (heros.step_attack == 7 || heros.step_attack == ennemi_attack_steps.length-3) {
-                ctx.globalAlpha = 0.75
-            } else if (heros.step_attack == 8 || heros.step_attack == ennemi_attack_steps.length-2) {
-                ctx.globalAlpha = 0.50
-            } else if (heros.step_attack == 9 || heros.step_attack == ennemi_attack_steps.length-1) {
-                ctx.globalAlpha = 0.25
-            }
-
-            if (heros.step_attack >= 0) {
-                offset_charge = 1.5*ennemi_attack_steps[heros.step_attack]
-            }
-        }
-
-        if (time > heros.debut_clignotement + 2000) {
-            heros.debut_clignotement = -1
-        } else {
-            ctx.globalAlpha *= Math.abs(1-2*((time-heros.debut_clignotement)%250)/250)
-        }
-
-        if (heros.step_attack < 10 || heros.step_attack >= ennemi_attack_steps.length-3) {
-            ctx.drawImage(imgs["art-heros-esprit"], heros.x - 0.5*w + offset_charge - heros.decalage_x*4, heros.y - 0.5*h*respi, w, h)
-            ctx.drawImage(imgs["face_neutral"], heros.x - 0.5*w + offset_charge - heros.decalage_x*4, heros.y - 0.5*h*respi, w, h)
-        }
-
-        if (heros.decalage_x > 0.2 && heros.debut_clignotement == -1) {
-            heros.decalage_x *= 0.95
-        }
-
-        ctx.globalAlpha = 1
+        ctx.drawImage(imgs["art-heros-esprit"], heros.x - 0.5*w, heros.y - 0.5*h*respi, w, h)
+        ctx.drawImage(imgs["face_neutral"], heros.x - 0.5*w, heros.y - 0.5*h*respi, w, h)
     }
-
 
     if (combos.nb > 0) {
         ctx.font = 48 + "px Romelio"
@@ -1744,57 +1674,7 @@ function animate_jeu() {
         let enemy = ennemis[i]
         let w = enemy.w * respi
         let h = enemy.h * respi
-        let attacking = 0
-
-        if (enemy.time_attack > -1) {
-            if (time >= enemy.time_attack) {
-                enemy.step_attack = 0
-                enemy.time_attack = -1
-            }
-        }
-
-        if (enemy.step_attack > -1) {
-            enemy.step_attack += 1
-            if (enemy.step_attack == 5) {
-                console.log(i, enemy.audio_dgts)
-                playAudioDegatsFrappe(enemy.audio_dgts)
-                heros.pv -= enemy.audio_dgts
-                heros.decalage_x += enemy.audio_dgts
-                if (heros.debut_clignotement == -1) {
-                    heros.debut_clignotement = time
-                }
-            }
-            if (enemy.step_attack >= ennemi_attack_steps.length) {
-                enemy.step_attack = -1
-            }
-        }
-
-        if (time > enemy.debut_clignotement + 2000) {
-            enemy.debut_clignotement = -1
-        } else {
-            ctx.globalAlpha *= Math.abs(1-2*((time-heros.debut_clignotement)%250)/250)
-        }
-
-        if (enemy.step_attack < 10 || enemy.step_attack >= ennemi_attack_steps.length-3) {
-            if (enemy.step_attack == 7 || enemy.step_attack == ennemi_attack_steps.length-3) {
-                ctx.globalAlpha = 0.75
-            } else if (enemy.step_attack == 8 || enemy.step_attack == ennemi_attack_steps.length-2) {
-                ctx.globalAlpha = 0.50
-            } else if (enemy.step_attack == 9 || enemy.step_attack == ennemi_attack_steps.length-1) {
-                ctx.globalAlpha = 0.25
-            }
-
-            let offset_charge = 0
-            if (enemy.step_attack >= 0) {
-                offset_charge = 1.5*ennemi_attack_steps[enemy.step_attack]
-            }
-            ctx.drawImage(imgs["monster" + enemy.num], enemy.x - 0.5*w - offset_charge + enemy.decalage_x, enemy.y - 0.5*h*respi, w, h)
-            ctx.globalAlpha = 1
-        }
-
-        if (enemy.decalage_x > 0.2 && enemy.debut_clignotement == -1) {
-            enemy.decalage_x *= 0.95
-        }
+        ctx.drawImage(imgs["monster" + enemy.num], enemy.x - 0.5*w, enemy.y - 0.5*h*respi, w, h)
 
         ctx.font = 24 + "px Romelio"
         ctx.textAlign = "center"
@@ -2378,26 +2258,19 @@ function print_text(dialogue) {
 }
 
 
-function animate_fin() {
+function animate_perdu() {
 
     ctx.drawImage(imgs["background3"], 0, 0, 1920, 1080)
 
     ctx.font = "120px Arial"
-
-    if (dj_step >= 3) {
-        ctx.strokeText("Victoire", 960, 540)
-        ctx.fillStyle = "#ffffff"
-        ctx.fillText("Victoire", 960, 540)
-    } else {
-        ctx.strokeText("Échec", 960, 540)
-        ctx.fillStyle = "#ffffff"
-        ctx.fillText("Échec", 960, 540)
-    }
+    ctx.strokeText("Échec", 960, 540)
+    ctx.fillStyle = "#ffffff"
+    ctx.fillText("Échec", 960, 540)
 
     ctx.font = "72px Arial"
-    ctx.strokeText("Étage atteint : " + heros.num_etage, 960, 840)
+    ctx.strokeText("Étage atteint :" + heros.num_etage, 960, 840)
     ctx.fillStyle = "#ffffff"
-    ctx.fillText("Étage atteint : " + heros.num_etage, 960, 840)
+    ctx.fillText("Étage atteint :" + heros.num_etage, 960, 840)
 
     if (clicked.down) {
         clicked.down = false
@@ -2573,7 +2446,7 @@ function global_hub() {
     } else if (mode == 6) {
         animate_revision()
     } else if (mode == 7) {
-        animate_fin()
+        animate_perdu()
     }
 
 //    ctx.font = "40px Arial"
